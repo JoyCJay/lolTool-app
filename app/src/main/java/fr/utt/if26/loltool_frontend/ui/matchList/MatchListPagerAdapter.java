@@ -20,7 +20,7 @@ public class MatchListPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return new Tab1();
             case 1:
-                return new Tab1();
+                return new Tab2();
             default:
                 return null;
         }
