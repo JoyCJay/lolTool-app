@@ -17,7 +17,7 @@ import java.util.Map;
 
 import fr.utt.if26.loltool_frontend.R;
 
-public class Tab2 extends Fragment {
+public class Tab2 extends Tab {
     private String[] name = {"Name: Jean Marc Nigro","Name: Jean Marc Nigro","Name: Jean Marc Nigro",
             "Name: Jean Marc Nigro","Name: Jean Marc Nigro","Name: Jean Marc Nigro"};
     private String[] email = {"Email: jean_marc_nigro@utt.fr","Email: jean_marc_nigro@utt.fr","Email: jean_marc_nigro@utt.fr",
@@ -27,6 +27,11 @@ public class Tab2 extends Fragment {
     private int[] images = {R.drawable.nigro, R.drawable.nigro, R.drawable.nigro,
             R.drawable.nigro, R.drawable.nigro, R.drawable.nigro};
     private List<Map<String, Object>> list_map = new ArrayList<>();
+
+    @Override
+    public String getPageTitle() {
+        return "template";
+    }
 
     @Override
     public View onCreateView(

@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,17 +23,22 @@ import java.net.URL;
 
 import fr.utt.if26.loltool_frontend.R;
 
-public class Tab1 extends Fragment implements SearchView.OnQueryTextListener {
+public class SummonerInfo extends Tab implements SearchView.OnQueryTextListener {
+    public String pageTitle = "Summoner";
 
     private static final int GET_DATA_SUCCESS = 200; //获取数据成功的标志
     private Handler mHandler = null;
 
-    @Nullable
+    @Override
+    public String getPageTitle() {
+        return this.pageTitle;
+    }
+
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_matchlist_tab1, container, false);
+        View view = inflater.inflate(R.layout.fragment_matchlisht_summoner, container, false);
 
         initUI(view);
         return view;
