@@ -1,12 +1,8 @@
 package fr.utt.if26.loltool_frontend.ui.matchList;
 
-import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-
-import fr.utt.if26.loltool_frontend.ui.matchList.Tab2;
 
 public class MatchListPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -14,7 +10,7 @@ public class MatchListPagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
     }
 
-    Tab[] fragments = {new SummonerInfo(), new Tab2()};
+    Tab[] fragments = {new SummonerInfo(), new MatchList()};
 
     @Override
     public Fragment getItem(int position) {

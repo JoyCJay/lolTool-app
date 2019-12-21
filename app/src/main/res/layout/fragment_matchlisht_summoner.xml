@@ -12,7 +12,7 @@
         android:id="@+id/btn_text_connection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/search" />
+        android:text="LOG IN" />
 
     <TextView
         android:id="@+id/tv_accountId"
