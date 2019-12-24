@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import fr.utt.if26.loltool_frontend.summonersFragment.SummonersFragment;
 import fr.utt.if26.loltool_frontend.entity.User;
 
 
@@ -54,16 +54,25 @@ public class LoginFragment extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean isRight = false;
                 String userName = txtUserName.getText().toString();
                 String password = txtPassword.getText().toString();
 
                 List<User> users  = MainActivity.myDataBase.userDAO().getUsers();
+
+                if(userName.equals("")) Toast.makeText(getActivity(), "please enter user name", Toast.LENGTH_SHORT).show();
+                if (password.equals("")) Toast.makeText(getActivity(), "please enter password", Toast.LENGTH_SHORT).show();
+
                 for (User user : users){
                     if(userName.equals(user.getUserName()) && password.equals(user.getPassword())){
-                        Toast.makeText(getActivity(), "exist", Toast.LENGTH_SHORT).show();
+                        isRight = true;
+                        Toast.makeText(getActivity(), "login successfully", Toast.LENGTH_SHORT).show();
                         setUserName(userName);
+                        MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new SummonersFragment(userName))
+                                .addToBackStack(null).commit();
                     }
                 }
+                if(!isRight) Toast.makeText(getActivity(), "user name or password isn't right", Toast.LENGTH_SHORT).show();
             }
         });
 
