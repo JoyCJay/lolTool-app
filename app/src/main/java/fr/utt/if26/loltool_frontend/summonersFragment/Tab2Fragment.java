@@ -56,7 +56,7 @@ public class Tab2Fragment extends Fragment {
         View view = inflater.inflate(R.layout.tab2_fragment,container,false);
 
         recyclerView = view.findViewById(R.id.followRecyclerView);
-        adapter = new Tab2Adapter(getContext(), followerList);
+        adapter = new Tab2Adapter(getContext(), followerList, this.userName);
 //        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         swipeRefreshLayout = view.findViewById(R.id.swipe_follower_list);

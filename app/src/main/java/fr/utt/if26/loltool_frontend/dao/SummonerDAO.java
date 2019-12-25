@@ -16,18 +16,18 @@ public interface SummonerDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void addSummoner(Summoner summoner);
 
-    @Query("select * from summoners")
+    @Query("select * from summoner")
     List<Summoner> getSummoners();
 
-    @Query("select * from summoners where summoner_name = :summonerName")
+    @Query("select * from summoner where summoner_name = :summonerName")
     Summoner getSummonerBySummonerName(String summonerName);
 
-    @Query("select isVisible from summoners where summoner_name = :summonerName")
+    @Query("select isVisible from summoner where summoner_name = :summonerName")
     boolean checkVivible(String summonerName);
 
-    @Query("update summoners set isVisible=1 where summoner_name = :summonerName")
+    @Query("update summoner set isVisible=1 where summoner_name = :summonerName")
     void setSummonerVisible(String summonerName);
 
-    @Query("update summoners set isVisible=0 where summoner_name = :summonerName")
+    @Query("update summoner set isVisible=0 where summoner_name = :summonerName")
     void setSummonerUnVisible(String summonerName);
 }

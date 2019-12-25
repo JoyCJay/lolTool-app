@@ -73,7 +73,6 @@ public class Tab1Fragment extends Fragment implements SearchView.OnQueryTextList
     }
 
     private void setSwitchHide() {
-
         boolean isVisible = MainActivity.myDataBase.summonerDAO().checkVivible(userName);
         if(isVisible) switchHide.setChecked(false);
         else switchHide.setChecked(true);

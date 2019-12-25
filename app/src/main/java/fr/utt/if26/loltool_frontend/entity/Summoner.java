@@ -9,7 +9,7 @@ import androidx.room.TypeConverters;
 import java.util.Date;
 import fr.utt.if26.loltool_frontend.converter.DateConverter;
 
-@Entity(tableName = "summoners")
+@Entity(tableName = "summoner")
 public class Summoner {
 
     @PrimaryKey

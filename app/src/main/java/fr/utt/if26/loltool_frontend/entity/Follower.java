@@ -5,7 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "followers", primaryKeys = {"user_name", "summonerName"})
+@Entity(tableName = "follower", primaryKeys = {"user_name", "summoner_name"})
 public class Follower {
 
     @NonNull
@@ -13,6 +13,7 @@ public class Follower {
     private String userName;
 
     @NonNull
+    @ColumnInfo(name = "summoner_name")
     private String summonerName;
 
     public Follower(@NonNull String userName, @NonNull String summonerName) {

@@ -15,6 +15,6 @@ public interface UserDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void addUser(User user);
 
-    @Query("select * from users")
+    @Query("select * from user")
     List<User> getUsers();
 }
