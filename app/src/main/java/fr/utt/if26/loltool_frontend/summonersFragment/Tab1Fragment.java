@@ -1,5 +1,8 @@
 package fr.utt.if26.loltool_frontend.summonersFragment;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import fr.utt.if26.loltool_frontend.MainActivity;
 import fr.utt.if26.loltool_frontend.R;
@@ -36,6 +45,7 @@ public class Tab1Fragment extends Fragment implements SearchView.OnQueryTextList
     private TextView tvRevisionDate;
     private Button btnFollow;
     private Switch switchHide;
+    private Button btnExport;
 
     private String userName;
     private String searchName;
@@ -69,6 +79,13 @@ public class Tab1Fragment extends Fragment implements SearchView.OnQueryTextList
             }
         });
 
+        btnExport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                export(view);
+            }
+        });
+
         return view;
     }
 
@@ -99,6 +116,7 @@ public class Tab1Fragment extends Fragment implements SearchView.OnQueryTextList
         btnFollow = view.findViewById(R.id.btnFollow);
         btnFollow.setEnabled(false);
         switchHide = view.findViewById(R.id.switchHide);
+        btnExport = view.findViewById(R.id.btnExport);
 
         isSummonerExist = false;
 
@@ -129,5 +147,33 @@ public class Tab1Fragment extends Fragment implements SearchView.OnQueryTextList
     @Override
     public boolean onQueryTextChange(String s) {
         return false;
+    }
+
+    public void export(View view){
+        StringBuilder data = new StringBuilder();
+        data.append("Your Followers");
+        List<Follower> followers = MainActivity.myDataBase.followerDAO().getFollowersByUserName(userName);
+        for(Follower follower : followers){
+            data.append("\n").append(follower.getSummonerName());
+        }
+
+        try{
+            FileOutputStream out = Objects.requireNonNull(getContext()).openFileOutput("data.csv", Context.MODE_PRIVATE);
+            out.write(data.toString().getBytes());
+            out.close();
+
+            Context context = getContext();
+            File fileLocation = new File(context.getFilesDir(), "data.csv");
+            Uri path = FileProvider.getUriForFile(context, "fr.utt.if26.loltool_frontend.fileProvider", fileLocation);
+            Intent fileIntent = new Intent(Intent.ACTION_SEND);
+            fileIntent.setType("text/csv");
+            fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Data");
+            fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            fileIntent.putExtra(Intent.EXTRA_STREAM, path);
+            startActivity(Intent.createChooser(fileIntent, "Send mail"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

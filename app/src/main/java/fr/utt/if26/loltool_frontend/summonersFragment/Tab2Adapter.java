@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import fr.utt.if26.loltool_frontend.MainActivity;
 import fr.utt.if26.loltool_frontend.R;
+import fr.utt.if26.loltool_frontend.entity.Follower;
 import fr.utt.if26.loltool_frontend.entity.Summoner;
 import fr.utt.if26.loltool_frontend.matchMetaFragment.MatchMetaFragment;
 
@@ -47,39 +50,39 @@ public class Tab2Adapter extends RecyclerView.Adapter<Tab2Adapter.MyViewHolder> 
         viewHolder.item_follower.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new MatchMetaFragment(tab2ListItems.get(viewHolder.getAdapterPosition()).getSummonerName()))
-                        .addToBackStack(null).commit();
-//                myDialog = new Dialog(context);
-//                myDialog.setContentView(R.layout.dialog_follower);
-//                TextView tvDialogName = myDialog.findViewById(R.id.tv_dialog);
-//                tvDialogName.setText(tab2ListItems.get(viewHolder.getAdapterPosition()).getSummonerName());
-//                Button btnInfo = myDialog.findViewById(R.id.dialog_btn_info);
-//                Button btnDelete = myDialog.findViewById(R.id.dialog_btn_delete);
-//
-//                btnInfo.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//
-//                    }
-//                });
-//
-//                btnDelete.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        String summonerName = tab2ListItems.get(viewHolder.getAdapterPosition()).getSummonerName();
-//                        List<Follower> followers = MainActivity.myDataBase.followerDAO().getFollowersByUserName(userName);
-//
-//                        for(Follower follower : followers){
-//                            if(follower.getSummonerName().equals(summonerName)) {
-//                                MainActivity.myDataBase.followerDAO().deleteFollower(follower);
-//                                Toast.makeText(context, "delete successfully", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    }
-//
-//                });
-//
-//                myDialog.show();
+
+                myDialog = new Dialog(context);
+                myDialog.setContentView(R.layout.dialog_follower);
+                TextView tvDialogName = myDialog.findViewById(R.id.tv_dialog);
+                tvDialogName.setText(tab2ListItems.get(viewHolder.getAdapterPosition()).getSummonerName());
+                Button btnInfo = myDialog.findViewById(R.id.dialog_btn_info);
+                Button btnDelete = myDialog.findViewById(R.id.dialog_btn_delete);
+
+                btnInfo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new MatchMetaFragment(tab2ListItems.get(viewHolder.getAdapterPosition()).getSummonerName()))
+                                .addToBackStack(null).commit();
+                    }
+                });
+
+                btnDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String summonerName = tab2ListItems.get(viewHolder.getAdapterPosition()).getSummonerName();
+                        List<Follower> followers = MainActivity.myDataBase.followerDAO().getFollowersByUserName(userName);
+
+                        for(Follower follower : followers){
+                            if(follower.getSummonerName().equals(summonerName)) {
+                                MainActivity.myDataBase.followerDAO().deleteFollower(follower);
+                                Toast.makeText(context, "delete successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                });
+
+                myDialog.show();
             }
         });
     }

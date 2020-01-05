@@ -27,8 +27,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(savedInstanceState != null){
+            Log.d(TAG, "onCreate() Restoring previous state");
+        }else{
+            Log.d(TAG, "onCreate() No save state available");
+        }
+
         setContentView(R.layout.activity_main);
-        Log.d(TAG, "onCreate: Starting");
 
         myDataBase = Room.databaseBuilder(getApplicationContext(), MyDataBase.class, "my_db").allowMainThreadQueries().build();
         saveUsers(myDataBase);
