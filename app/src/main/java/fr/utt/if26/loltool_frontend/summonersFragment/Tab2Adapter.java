@@ -1,7 +1,9 @@
 package fr.utt.if26.loltool_frontend.summonersFragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -63,21 +66,40 @@ public class Tab2Adapter extends RecyclerView.Adapter<Tab2Adapter.MyViewHolder> 
                     public void onClick(View view) {
                         MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new MatchMetaFragment(tab2ListItems.get(viewHolder.getAdapterPosition()).getSummonerName()))
                                 .addToBackStack(null).commit();
+                        myDialog.cancel();
                     }
                 });
 
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String summonerName = tab2ListItems.get(viewHolder.getAdapterPosition()).getSummonerName();
-                        List<Follower> followers = MainActivity.myDataBase.followerDAO().getFollowersByUserName(userName);
 
-                        for(Follower follower : followers){
-                            if(follower.getSummonerName().equals(summonerName)) {
-                                MainActivity.myDataBase.followerDAO().deleteFollower(follower);
-                                Toast.makeText(context, "delete successfully", Toast.LENGTH_SHORT).show();
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setMessage("Are you sure?");
+                        builder.setCancelable(false);
+                        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
+                                String summonerName = tab2ListItems.get(viewHolder.getAdapterPosition()).getSummonerName();
+                                List<Follower> followers = MainActivity.myDataBase.followerDAO().getFollowersByUserName(userName);
+
+                                for(Follower follower : followers){
+                                    if(follower.getSummonerName().equals(summonerName)) {
+                                        MainActivity.myDataBase.followerDAO().deleteFollower(follower);
+                                        Toast.makeText(context, "delete successfully", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                myDialog.cancel();
                             }
-                        }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                        builder.show();
                     }
 
                 });

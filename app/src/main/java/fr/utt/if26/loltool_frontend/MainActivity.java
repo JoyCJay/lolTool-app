@@ -1,11 +1,16 @@
 package fr.utt.if26.loltool_frontend;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.room.Room;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static FragmentManager fragmentManager;
     public static MyDataBase myDataBase;
+    public static Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         myDataBase = Room.databaseBuilder(getApplicationContext(), MyDataBase.class, "my_db").allowMainThreadQueries().build();
         saveUsers(myDataBase);
         saveSummoners(myDataBase);
@@ -48,6 +57,25 @@ public class MainActivity extends AppCompatActivity {
             }
             fragmentManager.beginTransaction().add(R.id.fragment_container, new LoginFragment()).commit();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_logout:
+                Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new LoginFragment())
+                        .commit();
+                break;
+        }
+        return true;
     }
 
     private void saveUsers(MyDataBase dataBase) {

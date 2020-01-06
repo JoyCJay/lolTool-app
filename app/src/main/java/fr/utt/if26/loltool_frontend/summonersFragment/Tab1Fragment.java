@@ -76,6 +76,7 @@ public class Tab1Fragment extends Fragment implements SearchView.OnQueryTextList
 
                 Follower follower = new Follower(userName, summonerName);
                 MainActivity.myDataBase.followerDAO().addFollower(follower);
+                Toast.makeText(getActivity(), "summoner is added in follower list", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -131,7 +132,7 @@ public class Tab1Fragment extends Fragment implements SearchView.OnQueryTextList
         for (Summoner summoner : summoners){
             if(summonerName.equals(summoner.getSummonerName()) && summoner.isVisible()){
                 Toast.makeText(getActivity(), "summoner exists", Toast.LENGTH_SHORT).show();
-                tvSummonerName.setText("SummonerName: "+summoner.getSummonerName());
+                tvSummonerName.setText("Summoner Name: "+summoner.getSummonerName());
                 tvLevel.setText("Level: "+summoner.getLevel());
                 tvRevisionDate.setText("Revision Date: "+summoner.getRevisionDate());
                 isSummonerExist = true;
